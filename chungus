@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ביג צ'אנגאס - סיפורו של מימ פופולרי, חידון ומשחק</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS בסיסי */
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #FFC107;
+            --background-color: #f0f2f5;
+            --text-color: #333;
+            --light-text-color: #f4f4f9;
+        }
+
+        body {
+            font-family: 'Heebo', 'Arial', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            direction: rtl;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #8BC34A);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header h2 {
+            font-size: 1.8rem;
+            margin-top: 10px;
+            color: var(--secondary-color);
+            font-weight: 400;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* ********** אזור התוכן הראשי ********** */
+        #main-content-wrapper {
+            transition: opacity 0.3s;
+            display: block; 
+        }
+
+        .content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .content p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        .content a {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 2px;
+            transition: color 0.2s, border-bottom 0.2s;
+        }
+
+        .content a:hover {
+            color: #43a047;
+            border-bottom-color: #43a047;
+        }
+        .content p strong {
+            color: var(--primary-color);
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .game-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 0 10px;
+        }
+
+        .game-button:hover {
+            background-color: #43a047;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            background-color: var(--text-color);
+            color: var(--light-text-color);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 50px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ********** סגנונות החידון ********** */
+        #quiz-area { display: none; margin-top: 40px; background-color: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); }
+        .question-group { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .question { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: #555; }
+        .options label { display: block; background-color: #f9f9f9; padding: 12px; margin-top: 10px; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; transition: background-color 0.2s, transform 0.2s; }
+        .options label:hover { background-color: #e9e9e9; transform: translateX(5px); }
+        .options input[type="radio"] { margin-left: 10px; }
+        .check-button { display: block; margin: 15px 0 0 auto; padding: 8px 15px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; transition: background-color 0.2s; }
+        .feedback { margin-top: 10px; font-weight: bold; text-align: center; }
+        .correct-feedback { color: var(--primary-color); }
+        .incorrect-feedback { color: #F44336; }
+        .correct { background-color: #e8f5e9; border: 1px solid var(--primary-color); }
+        .incorrect { background-color: #ffebee; border: 1px solid #e57373; }
+        .back-button-quiz { text-align: center; margin-top: 30px; }
+
+        /* ********** סגנונות המשחק ********** */
+        #game-area {
+            display: none; 
+            height: 500px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        #game-messages {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            font-weight: bold;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+            padding: 20px 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            white-space: nowrap;
+        }
+        
+        #chungus {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            pointer-events: none;
+            transition: transform 0.1s linear;
+            z-index: 999;
+            transition: filter 0.5s ease-in-out;
+        }
+        
+        .rage-mode {
+            filter: hue-rotate(300deg) saturate(2.5) brightness(1.2); 
+            box-shadow: 0 0 20px 5px rgba(255, 0, 0, 0.8);
+        }
+
+        .win-message { color: var(--primary-color); }
+        .lose-message { color: #F44336; }
+        .game-controls { text-align: center; padding: 20px; }
+        
+        .carrot-cursor { 
+            cursor: url('https://www.offidocs.com/images/carrotvegetablesfoodfreevectorgraphiconpixabay.jpg') 12 12, auto !important; 
+        }
+        
+        .hard-mode-warning {
+            color: #F44336;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>ביג צ'אנגאס</h1>
+    <h2>הדמות שמבדרת את הרשת</h2>
+</header>
+
+<div class="container">
+    <div id="main-content-wrapper">
+        <div class="content">
+            <p><strong>ביג צ'אנגאס</strong> הוא מימ אינטרנטי שנעשה פופולרי מאוד בשנים האחרונות, אך סיפורו מתחיל הרבה קודם לכן, בשנת 1941.</p>
+            <p>הדמות המקורית של "ביג צ'אנגאס" מבוססת על דמותו של <em>באגס באני</em> (Bugs Bunny) מתוך סרט האנימציה של לוני טונס. בסצנה בסרט "Wabbit Twouble" מ-1941, באגס באני משנה את צורתו למצב שבו הוא נראה עבה וגדול באופן מוגזם. בסצנה זו, באגס באני משמיע את הצחוק המפורסם שלו, ומופיעה דמות עגלגלה וקומית שמזוהה עם הרבה הומור קלאסי.</p>
+            <p>הסצנה הזאת לא זכתה להצלחה מיידית, אך עם השנים היא נזכרה בקרב מעריצי לוני טונס. ברגעים שבהם אנשים התחילו ליצור תכנים יצירתיים על דמותו של באגס באני, התמונה הזאת, עם הגודל המוגזם, הפכה לנושאת משקל תרבותי בעיני הצופים.</p>
+            <p>הדמות צמחה לפופולריות במהירות במיוחד בשנת 2018, לאחר שבמשחקי וידאו ופורומים ברשת התחילו להופיע גרסאות רבות שלה. המימ "ביג צ'אנגאס" מהווה מעין פרודיה על דמותו של באגס באני, ומלבד צחוק, הוא גם משמש הרבה פעמים עם כיתובים מצחיקים.</p>
+            <p>הפופולריות שלו נובעת דווקא מההגזמה שבו: התמונה שבה באגס באני נראה כל כך עבה ולא מציאותי, יצרה את האפקט הקומי והפתיעה צופים רבים. השם "ביג צ'אנגאס" הפך להיות מזוהה עם כל מיני גרסאות משעשעות שבהן הדמות הופיעה בסיטואציות שונות או עם כיתובים הומוריסטיים.</p>
+            <p>בנוסף לכך, הופעת "ביג צ'אנגאס" לא נשארה רק בעולם המימים. במהלך השנים הדמות זכתה להופעות גם במשחקי וידאו כמו במשחק <em>PlayStation All-Stars Battle Royale</em>, שבו היה ניתן לראות את הדמות משתתפת במאבק בין דמויות נוספות. כמו כן, ניתן למצוא דימויים של הדמות במדיות רבות, ממימים ועד יצירות מוזיקליות.</p>
+            
+            <p>אחד הביטויים הפופולריים ביותר של תרבות המימ סביב ביג צ'אנגאס הוא ה<a href="https://youtu.be/cB4dYfFgaME?si=mLQemf5n2kX2b9RP" target="_blank">שיר</a> שנוצר בהשראתו. השיר, שמבוסס על לחן פשוט וקליט, חוזר על המילים "Big Chungus, Big Chungus" שוב ושוב, והפך ללהיט ויראלי ברשתות החברתיות ובפלטפורמות שיתוף וידאו. הוא מהווה דוגמה מצוינת לכוחה של תרבות האינטרנט לקחת אלמנט חזותי פשוט ולהפוך אותו לתופעה מוזיקלית קומית ומשעשעת.</p>
+
+            <p>הכוח של המימ הזה טמון לא רק בהומור שבו, אלא גם בתפיסה של חופש יצירתי שמאפשר לכל אחד לקחת דמות מוכרת וליצור ממנה גרסאות מצחיקות ומפתיעות. לדמות יש את היכולת לעורר צחוק ולהפוך לחלק מהתרבות הדיגיטלית והאינטרנטית בצורה קלה ומהירה.</p>
+             </div>
+
+        <p class="quiz-intro">כדי להיכנס לחידון/משחק, נא ללחוץ על הכפתור מתחת:</p>
+        <div class="button-container">
+            <a href="#" id="quiz-button" class="game-button">כניסה לחידון (10 שאלות)</a>
+            <a href="#" id="game-button" class="game-button">כניסה למשחק (3 רמות)</a>
+        </div>
+    </div>
+    <div id="quiz-area">
+        <h2 style="text-align:center; color: var(--primary-color);">חידון על ביג צ'אנגאס</h2>
+        <form id="quiz-form"></form>
+        <div class="back-button-quiz">
+            <button class="game-button" onclick="showMainContent()">חזרה לטקסט הראשי</button>
+        </div>
+    </div>
+    <div id="game-area">
+        <div class="game-controls">
+            <h2>משחק: תפוס אותי אם אתה יכול!</h2>
+            <div style="margin-bottom: 15px;">
+                <label for="level-select" style="font-weight: bold;">בחר רמה:</label>
+                <select id="level-select" style="padding: 8px; border-radius: 5px; margin-right: 10px; font-size: 1rem;">
+                    <option value="easy">רמה קלה (30 שניות, האצה ב-10 שניות אחרונות)</option>
+                    <option value="medium">רמה בינונית (1 דקה, האצה ב-20 שניות אחרונות)</option>
+                    <option value="hard">רמה קשה (45 שניות, מהיר מאוד וזועם כל הזמן)</option>
+                </select>
+            </div>
+            <p style="font-weight: bold; color: var(--text-color);">הזיזו את העכבר (הגזר) כדי להימנע מביג צ'אנגאס! <span id="timer-display"></span></p>
+            <div id="hard-mode-warning" class="hard-mode-warning" style="display: none;">
+                ⚠️ אזהרה: רמה קשה - ביג צ'אנגאס מהיר מאוד וזועם!
+            </div>
+            <button class="game-button" onclick="resetGame()">התחל משחק מחדש</button>
+            <button class="game-button" onclick="showMainContent(); hideGame();">חזרה לטקסט הראשי</button>
+        </div>
+        <img id="chungus" src="https://purepng.com/public/uploads/large/big-chungus-jkg.png" style="top: 250px; left: 400px;">
+    </div>
+    <div id="game-messages"></div>
+    </div>
+
+<div class="footer">
+    <p>יצירת תוכן על ביג צ'אנגאס - עולם המימים הכובש!</p>
+</div>
+
+<script>
+    // ********** משתנים גלובליים ואלמנטים **********
+    const mainContentWrapper = document.getElementById('main-content-wrapper');
+    const quizArea = document.getElementById('quiz-area');
+    const quizForm = document.getElementById('quiz-form');
+    const quizButton = document.getElementById('quiz-button');
+    const gameButton = document.getElementById('game-button');
+    const gameArea = document.getElementById('game-area');
+    const chungusElement = document.getElementById('chungus');
+    const messages = document.getElementById('game-messages');
+    const timerDisplay = document.getElementById('timer-display');
+    const levelSelect = document.getElementById('level-select'); 
+    const hardModeWarning = document.getElementById('hard-mode-warning');
+
+    let quizBuilt = false;
+    let chungus = { x: 400, y: 250, size: 120 };
+    let carrot = { x: 0, y: 0, size: 25 };
+    let gameLoop, gameTimer, rageTimer;
+    let gameActive = false;
+    let chungusSpeed = 3; 
+    let selectedLevel = {}; 
+    
+    // ********** הגדרות רמות המשחק (מעודכן עם רמה קשה מהירה יותר) **********
+    const gameLevels = {
+        easy: {
+            duration: 30000, // 30 שניות
+            initialSpeed: 3,
+            rageTime: 20000, // האצה ב-10 שניות אחרונות
+            rageMultiplier: 2.5,
+            alwaysRage: false,
+            name: "רמה קלה ⭐"
+        },
+        medium: {
+            duration: 60000, // 1 דקה
+            initialSpeed: 4,
+            rageTime: 40000, // האצה ב-20 שניות אחרונות
+            rageMultiplier: 2.5,
+            alwaysRage: false,
+            name: "רמה בינונית ⭐⭐"
+        },
+        hard: {
+            duration: 45000, // 45 שניות (קצר יותר כי הוא מהיר מאוד)
+            initialSpeed: 7.5, // מהיר מאוד מההתחלה
+            rageTime: 15000, // האצה נוספת אחרי 15 שניות
+            rageMultiplier: 1.8, // הכפלה נוספת
+            alwaysRage: true, // זועם תמיד
+            name: "רמה קשה ⭐⭐⭐"
+        }
+    };
+
+    // ********** רשימת השאלות המלאה (10 שאלות) **********
+    const quizData = [
+        { question: "מאיזו שנה מתחילה הופעת הדמות המקורית של ביג צ'אנגאס?", options: ["1950", "1941", "1980", "2005"], answer: "1941" },
+        { question: "על איזו דמות מבוסס 'ביג צ'אנגאס'?", options: ["הדמות של מיקי מאוס", "הדמות של דאפי דאק", "הדמות של באגס באני", "הדמות של יוסמיטי סאם"], answer: "הדמות של באגס באני" },
+        { question: "באיזה סרט אנימציה הופיעה הדמות לראשונה?", options: ["'What's Up, Doc?'", "'Rabbit Fire'", "'Wabbit Twouble'", "'Duck Amuck'"], answer: "'Wabbit Twouble'" },
+        { question: "מה המטרה העיקרית של המימ 'ביג צ'אנגאס'?", options: ["להיות דמות רצינית", "לשמש כפרודיה והומור", "להעביר מסרים פוליטיים", "לייצג חיות מחמד"], answer: "לשמש כפרודיה והומור" },
+        { question: "מהו הכוח העיקרי של המימ 'ביג צ'אנגאס' לפי הטקסט?", options: ["הוא קליט", "הוא קל לצייר", "הוא מציאותי", "הוא מעורר צחוק ומאפשר חופש יצירתי"], answer: "הוא מעורר צחוק ומאפשר חופש יצירתי" },
+        { question: "איזו תכונה של באגס באני בסרטון המקורי היא המקור למימ 'ביג צ'אנגאס'?", options: ["הצחוק המפורסם שלו", "הגזר שהוא אוכל", "הצורה העבה והמוגזמת שלו", "הדיבור המהיר שלו"], answer: "הצורה העבה והמוגזמת שלו" },
+        { question: "מתי הפך המימ 'ביג צ'אנגאס' לפופולרי במיוחד ברשת?", options: ["1995", "2012", "2018", "2022"], answer: "2018" },
+        { question: "באיזה ז'אנר משחק וידאו הוצגה הדמות 'ביג צ'אנגאס' לפי הטקסט?", options: ["משחק יריות", "משחק מירוצים", "משחק לחימה (כמו PlayStation All-Stars Battle Royale)", "משחק אסטרטגיה"], answer: "משחק לחימה (כמו PlayStation All-Stars Battle Royale)" },
+        { question: "מהן המילים החוזרות בשיר הוויראלי שנוצר בהשראת המימ?", options: ["Bugs Bunny", "Big Chungus, Big Chungus", "Looney Tunes", "What's Up Doc"], answer: "Big Chungus, Big Chungus" },
+        { question: "איזה סוג של קומדיה מייצג המימ 'ביג צ'אנגאס'?", options: ["סאטירה פוליטית עמוקה", "קומדיה שחורה מתוחכמת", "הומור המבוסס על הגזמה ופרודיה קלילה", "הומור יבש"], answer: "הומור המבוסס על הגזמה ופרודיה קלילה" }
+    ];
+    // **********************************************
+
+    // הגדרת הרמה ההתחלתית
+    selectedLevel = gameLevels[levelSelect.value];
+    levelSelect.addEventListener('change', (e) => {
+        selectedLevel = gameLevels[e.target.value];
+        // הצג או הסתר אזהרה לרמה הקשה
+        if (e.target.value === 'hard') {
+            hardModeWarning.style.display = 'block';
+        } else {
+            hardModeWarning.style.display = 'none';
+        }
+        // לא מתחילים משחק אוטומטית, המשתמש ילחץ "התחל משחק מחדש"
+    });
+
+
+    // ********** פונקציות ניווט **********
+    function hideAll() {
+        mainContentWrapper.style.display = 'none';
+        quizArea.style.display = 'none';
+        gameArea.style.display = 'none';
+        messages.style.display = 'none';
+        document.body.classList.remove('carrot-cursor');
+        document.body.style.overflow = 'auto'; 
+    }
+
+    function showMainContent() {
+        hideAll();
+        mainContentWrapper.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showQuiz() {
+        hideAll();
+        if (!quizBuilt) {
+            buildQuiz();
+            quizBuilt = true;
+        }
+        quizArea.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function hideGame() {
+        gameActive = false;
+        clearInterval(gameLoop);
+        clearTimeout(gameTimer);
+        clearTimeout(rageTimer);
+        chungusElement.classList.remove('rage-mode');
+    }
+    // **********************************
+
+    // ********** אירועי לחיצה על כפתורים **********
+    quizButton.addEventListener('click', (event) => {
+        event.preventDefault(); 
+        showQuiz();
+    });
+
+    gameButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        hideAll();
+        gameArea.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // הצג או הסתר אזהרה לרמה הקשה
+        if (levelSelect.value === 'hard') {
+            hardModeWarning.style.display = 'block';
+        } else {
+            hardModeWarning.style.display = 'none';
+        }
+    });
+    // **********************************************
+
+    // ********** לוגיקת החידון **********
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function buildQuiz() {
+        quizData.forEach((item, index) => {
+            const questionGroup = document.createElement('div');
+            questionGroup.classList.add('question-group');
+            questionGroup.id = `question-group-${index}`;
+
+            const questionElement = document.createElement('div');
+            questionElement.classList.add('question');
+            questionElement.innerHTML = `<p>${index + 1}. ${item.question}</p>`;
+
+            const optionsElement = document.createElement('div');
+            optionsElement.classList.add('options');
+            
+            const shuffledOptions = shuffleArray([...item.options]);
+
+            shuffledOptions.forEach(option => {
+                optionsElement.innerHTML += `
+                    <label>
+                        <input type="radio" name="question${index}" value="${option}">
+                        ${option}
+                    </label>
+                `;
+            });
+            
+            const checkButton = document.createElement('button');
+            checkButton.classList.add('check-button');
+            checkButton.type = 'button';
+            checkButton.textContent = 'בדוק תשובה';
+            checkButton.onclick = () => checkAnswer(index, item.answer);
+
+            const feedbackElement = document.createElement('div');
+            feedbackElement.classList.add('feedback');
+            feedbackElement.id = `feedback-${index}`;
+
+            questionGroup.appendChild(questionElement);
+            questionGroup.appendChild(optionsElement);
+            questionGroup.appendChild(checkButton);
+            questionGroup.appendChild(feedbackElement);
+
+            quizForm.appendChild(questionGroup);
+        });
+    }
+
+    function checkAnswer(questionIndex, correctAnswer) {
+        const selectedOption = document.querySelector(`input[name="question${questionIndex}"]:checked`);
+        const feedbackElement = document.getElementById(`feedback-${questionIndex}`);
+        const questionGroup = document.getElementById(`question-group-${questionIndex}`);
+        const checkButton = questionGroup.querySelector('.check-button');
+
+        questionGroup.querySelectorAll('label').forEach(label => {
+            label.classList.remove('correct', 'incorrect');
+        });
+        feedbackElement.textContent = '';
+        
+        if (!selectedOption) {
+            feedbackElement.textContent = 'בחר תשובה קודם.';
+            feedbackElement.classList.remove('correct-feedback', 'incorrect-feedback');
+            return;
+        }
+
+        const selectedLabel = selectedOption.closest('label');
+
+        if (selectedOption.value === correctAnswer) {
+            feedbackElement.textContent = 'כל הכבוד! זו התשובה הנכונה.';
+            feedbackElement.classList.remove('incorrect-feedback');
+            feedbackElement.classList.add('correct-feedback');
+            selectedLabel.classList.add('correct');
+        } else {
+            feedbackElement.textContent = `אופס, זו לא התשובה הנכונה. התשובה הנכונה היא: ${correctAnswer}`;
+            feedbackElement.classList.remove('correct-feedback');
+            feedbackElement.classList.add('incorrect-feedback');
+            selectedLabel.classList.add('incorrect');
+            
+            const correctLabel = document.querySelector(`input[name="question${questionIndex}"][value="${correctAnswer}"]`).closest('label');
+            correctLabel.classList.add('correct');
+        }
+        
+        const radioButtons = questionGroup.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(radio => radio.disabled = true);
+        checkButton.disabled = true;
+        checkButton.style.opacity = 0.6;
+        checkButton.style.cursor = "not-allowed";
+    }
+    // ********************************************
+
+    // ********** לוגיקת המשחק (מעודכן עם רמה קשה מהירה יותר) **********
+
+    function resetGame() {
+        if (gameLoop) clearInterval(gameLoop);
+        if (gameTimer) clearTimeout(gameTimer);
+        if (rageTimer) clearTimeout(rageTimer);
+        
+        // 1. טען הגדרות רמה
+        const currentLevel = selectedLevel; 
+        
+        chungusSpeed = currentLevel.initialSpeed;
+        chungusElement.classList.remove('rage-mode');
+        
+        // אם הרמה היא hard, הפעל את ה-rage-mode מההתחלה
+        if (currentLevel.alwaysRage) {
+            chungusElement.classList.add('rage-mode');
+        }
+
+        const areaRect = gameArea.getBoundingClientRect();
+        chungus.x = areaRect.width / 2 - chungus.size / 2;
+        chungus.y = areaRect.height / 2 - chungus.size / 2;
+        chungusElement.style.left = `${chungus.x}px`;
+        chungusElement.style.top = `${chungus.y}px`;
+
+        messages.textContent = '';
+        messages.classList.remove('win-message', 'lose-message');
+        messages.style.display = 'none';
+        
+        document.body.classList.add('carrot-cursor');
+        document.body.style.overflow = 'hidden'; 
+
+        gameActive = true;
+        gameLoop = setInterval(updateGame, 1000 / 60);
+
+        let secondsLeft = currentLevel.duration / 1000;
+        timerDisplay.textContent = `רמה: ${currentLevel.name} | זמן: ${secondsLeft} שניות`;
+        
+        const visualTimer = setInterval(() => {
+            secondsLeft--;
+            // הצגת טיימר והתראה
+            const displaySeconds = Math.max(0, secondsLeft);
+            const alert = (currentLevel.duration / 1000) - displaySeconds <= currentLevel.duration / 1000 && displaySeconds > 0 && displaySeconds <= 10 ? ' 🚨' : '';
+            
+            timerDisplay.textContent = `רמה: ${currentLevel.name} | זמן: ${displaySeconds} שניות${alert}`;
+            
+            if (secondsLeft <= 0 || !gameActive) clearInterval(visualTimer);
+        }, 1000);
+
+        // טיימר סיום משחק
+        gameTimer = setTimeout(() => {
+            if (gameActive) endGame(true);
+        }, currentLevel.duration); 
+        
+        // טיימר האצת רגז (רק אם rageTime > 0)
+        if (currentLevel.rageTime > 0) {
+            rageTimer = setTimeout(() => {
+                if (gameActive) activateRageMode(currentLevel.rageMultiplier);
+            }, currentLevel.rageTime);
+        }
+    }
+
+    function activateRageMode(multiplier) {
+        if (!gameActive) return;
+        chungusSpeed *= multiplier;
+        chungusElement.classList.add('rage-mode');
+        // הסרת התצוגה של הרמה והצגת התראה
+        timerDisplay.textContent = timerDisplay.textContent.split('|')[0] + " | (הוא זועם עוד יותר!) | " + timerDisplay.textContent.split('|')[2];
+    }
+
+    function updateGame() {
+        if (!gameActive) return;
+        
+        const areaRect = gameArea.getBoundingClientRect();
+        
+        const dx = carrot.x - chungus.x - (chungus.size / 2);
+        const dy = carrot.y - chungus.y - (chungus.size / 2);
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance > 1) {
+            chungus.x += (dx / distance) * chungusSpeed;
+            chungus.y += (dy / distance) * chungusSpeed;
+        }
+
+        chungus.x = Math.max(0, Math.min(chungus.x, areaRect.width - chungus.size));
+        chungus.y = Math.max(0, Math.min(chungus.y, areaRect.height - chungus.size));
+
+        chungusElement.style.left = `${chungus.x}px`;
+        chungusElement.style.top = `${chungus.y}px`;
+
+        if (distance < (chungus.size / 2) + (carrot.size / 2)) {
+            endGame(false); 
+        }
+    }
+
+    function endGame(won) {
+        if (!gameActive) return;
+        gameActive = false;
+        clearInterval(gameLoop);
+        clearTimeout(gameTimer);
+        clearTimeout(rageTimer);
+        
+        messages.style.display = 'block';
+        if (won) {
+            messages.textContent = "You Won! (ניצחתם!) 🎉";
+            messages.classList.add('win-message');
+        } else {
+            messages.textContent = "You Lose! (הפסדתם!) 😭";
+            messages.classList.add('lose-message');
+        }
+        
+        document.body.classList.remove('carrot-cursor');
+        document.body.style.overflow = 'auto';
+        chungusElement.classList.remove('rage-mode');
+
+        // העלמת ההודעה לאחר 3 שניות
+        setTimeout(() => {
+            messages.style.display = 'none';
+        }, 3000);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        if (!gameActive) return;
+
+        const gameRect = gameArea.getBoundingClientRect();
+
+        // חישוב המיקום של העכבר בתוך אזור המשחק (GameArea)
+        carrot.x = e.clientX - gameRect.left;
+        carrot.y = e.clientY - gameRect.top;
+        
+        carrot.x = Math.max(0, Math.min(carrot.x, gameRect.width));
+        carrot.y = Math.max(0, Math.min(carrot.y, gameRect.height));
+    });
+
+    // ודא שהתוכן הראשי מוצג בעת טעינת הדף, ושכל המשתנים מאותחלים
+    window.onload = () => {
+        selectedLevel = gameLevels[levelSelect.value];
+        showMainContent();
+    };
+</script>
+
+</body>
+</html>
