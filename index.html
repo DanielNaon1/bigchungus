@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Chungus - The Story of a Popular Meme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50; /* Green */
+            --secondary-color: #FFC107; /* Yellow */
+            --background-color: #f0f2f5;
+            --text-color: #333;
+            --light-text-color: #f4f4f9;
+        }
+
+        body {
+            font-family: 'Heebo', 'Arial', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            direction: ltr;
+            line-height: 1.6;
+            cursor: default; 
+            overflow-x: hidden; 
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #8BC34A);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header h2 {
+            font-size: 1.8rem;
+            margin-top: 10px;
+            color: var(--secondary-color);
+            font-weight: 400;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        #main-content-block {
+            transition: opacity 0.3s ease;
+        }
+
+        .content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px; 
+        }
+
+        .content p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .content a {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 2px;
+            transition: color 0.2s, border-bottom 0.2s;
+        }
+
+        .content a:hover {
+            color: #43a047;
+            border-bottom-color: #43a047;
+        }
+
+        .content p strong {
+            color: var(--primary-color);
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .game-button {
+            display: inline-block;
+            padding: 15px 20px; 
+            font-size: 1rem; 
+            font-weight: bold;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 5px; 
+        }
+
+        .game-button:hover {
+            background-color: #43a047;
+            transform: translateY(-2px);
+        }
+
+        .quiz-intro, .game-intro {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        /* Navigation Button Styling */
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+        }
+        .navigation-buttons button {
+            background-color: #607D8B;
+            font-size: 1rem;
+            padding: 10px 15px;
+            margin: 5px;
+        }
+        .navigation-buttons button:hover {
+            background-color: #546E7A;
+        }
+        
+        .reset-button {
+            background-color: #FF5722 !important;
+        }
+        .reset-button:hover {
+            background-color: #E64A19 !important;
+        }
+
+        /* Utility to hide elements */
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Quiz & Game 1 Specifics --- */
+        #game-container-wrapper {
+            display: none;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        #game-area-main { display: none; }
+        #level-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 0;
+        }
+        #game-container {
+            position: relative;
+            width: 95vw; 
+            max-width: 800px;
+            height: 500px;
+            margin: 0 auto;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            overflow: hidden; 
+            cursor: default; 
+            user-select: none; 
+            margin-bottom: 20px;
+        }
+        #chungus {
+            position: absolute; width: 120px; height: 120px; pointer-events: none; 
+            transition: none; transform-origin: center center; z-index: 999;
+        }
+        #chungus.glowing {
+            filter: drop-shadow(0 0 10px #FFC107) drop-shadow(0 0 20px #FF9800);
+        }
+        #game-messages {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 3.5rem; /* Smaller font for more text/buttons */
+            font-weight: bold; text-align: center; z-index: 1000;
+            display: none; width: 90%;
+            color: #F44336; text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        #exit-game-button {
+            position: absolute; top: 10px; left: 10px; width: 30px; height: 30px;
+            background-color: #F44336; color: white; border: none; border-radius: 5px;
+            font-weight: bold; cursor: pointer; z-index: 1001; font-size: 18px; display: none;
+        }
+        #reset-game-in-container {
+            position: absolute; top: 10px; right: 10px; padding: 8px 12px; 
+            font-size: 0.9rem; z-index: 1001; display: none;
+        }
+
+        /* --- GAME #2 STYLES --- */
+        #game2-container-wrapper {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #game2-area {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            margin: 0 auto;
+            background-color: white;
+            border: 4px solid #2196F3;
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .g2-player {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            left: 20px;
+            z-index: 10;
+            object-fit: contain; 
+        }
+
+        .g2-enemy {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            right: 20px;
+            z-index: 10;
+            object-fit: contain;
+        }
+
+        .g2-laser {
+            position: absolute;
+            width: 20px;
+            height: 6px;
+            background-color: #0000FF; /* Blue Laser for player */
+            box-shadow: 0 0 5px #0000FF;
+            z-index: 5;
+        }
+
+        .g2-enemy-laser {
+            position: absolute;
+            width: 20px;
+            height: 6px;
+            background-color: #FF0000; /* RED Laser for enemy */
+            box-shadow: 0 0 5px #FF0000;
+            z-index: 5;
+        }
+
+        .g2-hud {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            color: #333; 
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+            z-index: 20;
+            font-weight: bold;
+        }
+
+        .health-bar-container {
+            width: 200px;
+            height: 20px;
+            background-color: #ddd; 
+            border: 1px solid #333;
+        }
+        
+        .health-bar-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 100%;
+            transition: width 0.2s;
+        }
+
+        #g2-enemy-health-fill { background-color: #F44336; }
+
+        #game2-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        #game2-overlay h2 { font-size: 3rem; margin: 0 0 20px 0; }
+
+        /* --- End Game #2 Styles --- */
+        
+        /* --- QUIZ STYLES --- */
+        #quiz-container {
+            display: none; 
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .question-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .question-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .options label {
+            display: block;
+            margin: 8px 0;
+            padding: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .options label:hover {
+            background-color: #ddd;
+        }
+
+        .correct { background-color: #D4EDDA !important; border: 1px solid #C3E6CB; }
+        .incorrect { background-color: #F8D7DA !important; border: 1px solid #F5C6CB; }
+
+        #quiz-results {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: #2196F3;
+        }
+
+        /* --- END QUIZ STYLES --- */
+
+        .footer {
+            background-color: var(--text-color);
+            color: var(--light-text-color);
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 50px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Big Chungus</h1>
+    <h2>The Character That Entertains the Web</h2>
+</header>
+
+<div class="container">
+    <div id="main-content-block">
+        <div class="content">
+            <p><strong>Big Chungus</strong> is an internet meme that became very popular in recent years, but its story begins much earlier, in 1941.</p>
+            <p>The original character of "Big Chungus" is based on the figure of *Bugs Bunny* from the Looney Tunes animated short. In a scene in the film "Wabbit Twouble" from 1941, Bugs Bunny changes his form to an exaggeratedly large and obese state. In this scene, Bugs Bunny makes his famous laugh, and a plump and comical figure appears, associated with a lot of classic humor.</p>
+            <p>The character's popularity soared, especially in 2018, after many versions of it began appearing in video games and online forums. The "Big Chungus" meme serves as a parody of Bugs Bunny, and besides laughter, it is often used with humorous captions.</p>
+            <p>Its popularity stems precisely from its exaggeration: the image of Bugs Bunny looking so fat and unrealistic created the comic effect and surprised many viewers. The name "Big Chungus" became associated with various amusing versions where the character appeared in different situations or with humorous captions.</p>
+            <p>Moreover, the appearance of "Big Chungus" did not remain confined to the world of memes. Over the years, the character has also appeared in video games such as *PlayStation All-Stars Battle Royale*, where the character could be seen participating in a fight among other characters. Furthermore, images of the character can be found in many media, from memes to musical creations.</p>
+            
+            <p>One of the most popular expressions of the meme culture surrounding Big Chungus is the <a href="https://youtu.be/cB4dYfFgaME?si=mLQemf5n2kX2b9PR" target="_blank">song</a> created in its inspiration. The song, based on a simple and catchy tune, repeats the words "Big Chungus, Big Chungus" over and over, and became a viral hit on social networks and video sharing platforms. It is an excellent example of the power of internet culture to take a simple visual element and turn it into a humorous and entertaining musical phenomenon.</p>
+
+            <p>The strength of this meme lies not only in its humor but also in the concept of creative freedom that allows anyone to take a familiar character and create funny and surprising versions of it. The character has the ability to provoke laughter and quickly become part of digital and internet culture.</p>
+        </div>
+    </div> <p class="quiz-intro" id="main-nav-intro">Ready to test your knowledge or skill?</p>
+    <div class="button-container" id="main-buttons">
+        <button class="game-button" onclick="showQuiz()">Enter Quiz</button>
+        <button class="game-button" onclick="showLevelSelection()">Enter Game #1 (Dodge)</button>
+        <button class="game-button" onclick="showGame2LevelSelection()" style="background-color: #4CAF50;">Enter Game #2 (Battle)</button>
+    </div>
+    
+    <div id="game-container-wrapper">
+        <div id="level-selection">
+            <h2 style="color: var(--primary-color);">Choose a Difficulty Level (Game 1)</h2>
+            <button class="game-button" onclick="startGame('EASY')">Easy (30 Sec)</button>
+            <button class="game-button" onclick="startGame('MEDIUM')" style="background-color: #43A047;">Medium (60 Sec)</button>
+            <button class="game-button" onclick="startGame('HARD')" style="background-color: #FF9800;">Hard (45 Sec)</button>
+            <button class="game-button" onclick="startGame('WC')" style="background-color: #FBC02D;">World Champion (90 Sec)</button>
+            <button class="game-button" onclick="startGame('GOD')" style="background-color: #F44336;">God Mode (120 Sec)</button>
+        </div>
+        
+        <div id="game-area-main">
+            <div style="text-align: center; margin-bottom: 15px;">
+                <p style="font-size: 1.2rem; font-weight: bold; color: #555;">Time Left: <span id="game-timer-display">00:00</span> | Score: <span id="game-score-display">0</span></p>
+                <p id="level-acceleration-info" style="font-size: 0.9rem; color: #777; font-style: italic; margin-top: 5px;">Acceleration: Not Applicable</p>
+            </div>
+            <div id="game-container">
+                <button class="game-button reset-button" id="reset-game-in-container" onclick="resetCurrentGame()">Reset Game</button> 
+                <button id="exit-game-button" onclick="quitGame()">X</button>
+                <h2 style="text-align:center; color: var(--primary-color);">Game: Catch Me If You Can!</h2>
+                <p style="text-align: center; color: var(--text-color); font-weight: bold;">Move the cursor (mouse/touch) to dodge Big Chungus!</p>
+                <img id="chungus" src="https://purepng.com/public/uploads/large/big-chungus-jkg.png">
+                <div id="game-messages"></div>
+            </div>
+            </div>
+    </div>
+
+    <div id="game2-container-wrapper">
+        <div id="game2-level-selection">
+            <h2 style="color: #2196F3;">Game #2: Boss Battles</h2>
+            
+            <p style="color: #F44336; font-weight: bold; font-size: 1.2rem; background: #ffebee; padding: 10px; border-radius: 5px; display: inline-block;">
+                ⚠️ Notice: This game is designed for PC (Requires Keyboard arrows + Space).
+            </p>
+            <br><br>
+            
+            <p>Use Up/Down Arrows to Move. Spacebar to Shoot.</p>
+            <button class="game-button" onclick="startGame2(1)">Level 1 (100 HP | 1 Min)</button>
+            <button class="game-button" onclick="startGame2(2)">Level 2 (250 HP | 2 Min)</button>
+            <button class="game-button" onclick="startGame2(3)">Level 3 (500 HP | 3 Min)</button>
+            <button class="game-button" onclick="startGame2(4)">Level 4 (1000 HP | 5 Min)</button>
+            <button class="game-button" onclick="startGame2(5)">Level 5 (2000 HP | 5 Min)</button>
+            <button class="game-button" onclick="startGame2(6)" style="background-color: #F44336;">Final Boss (5000 HP | 10 Min)</button>
+            
+            <div style="margin-top: 20px;">
+                <button class="game-button" style="background-color: #F44336;" onclick="returnToMainButtons()">Back to Main Page</button>
+            </div>
+        </div>
+
+        <div id="game2-area">
+            <div class="g2-hud">
+                <div>
+                    Player HP: <span id="g2-player-hp-text">100</span>
+                    <div class="health-bar-container"><div id="g2-player-health-fill" class="health-bar-fill"></div></div>
+                </div>
+                <div>Time: <span id="g2-timer">05:00</span></div>
+                <div style="text-align: right;">
+                    Enemy HP: <span id="g2-enemy-hp-text">100</span>
+                    <div class="health-bar-container"><div id="g2-enemy-health-fill" class="health-bar-fill"></div></div>
+                </div>
+            </div>
+            
+            <img id="g2-player" class="g2-player" src="https://purepng.com/public/uploads/large/big-chungus-jkg.png" alt="Player">
+            <img id="g2-enemy" class="g2-enemy" src="" alt="Boss">
+            
+            <div id="game2-overlay">
+                <h2 id="g2-overlay-msg"></h2>
+                <div class="navigation-buttons">
+                    <button class="game-button" id="g2-next-level-button" style="display: none;">Next Level</button>
+                    <button class="game-button" onclick="resetGame2()">Restart Level</button>
+                    <button class="game-button" onclick="showGame2LevelSelection()">Change Level</button>
+                    <button class="game-button" onclick="returnToMainButtons()">Main Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="quiz-container">
+        <h2 style="text-align: center; color: #2196F3; margin-bottom: 25px;">Big Chungus Knowledge Quiz</h2>
+        <div id="quiz-display">
+            </div>
+        <div id="quiz-results"></div>
+        <div class="navigation-buttons" style="margin-top: 20px;">
+            <button class="game-button" style="background-color: #FF9800;" onclick="checkAnswer()">Submit Answers</button>
+            <button class="game-button reset-button" onclick="resetQuiz()">Restart Quiz</button>
+            <button class="game-button" onclick="returnToMainButtons()">Back to Main Page</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    <p>Content creation about Big Chungus - The Captivating World of Memes!</p>
+</div>
+
+<script>
+    // --- GLOBAL STATE ---
+    let currentGameMode = 'none'; 
+
+    // --- DOM Elements ---
+    const mainContentBlock = document.getElementById('main-content-block');
+    const mainNavIntro = document.getElementById('main-nav-intro');
+    const mainButtonsContainer = document.getElementById('main-buttons');
+    
+    // Game 1 Elements
+    const gameWrapper = document.getElementById('game-container-wrapper');
+    const levelSelection = document.getElementById('level-selection');
+    const gameAreaMain = document.getElementById('game-area-main');
+    const gameContainer = document.getElementById('game-container');
+    const chungusElement = document.getElementById('chungus');
+    const messages = document.getElementById('game-messages');
+    const exitButton = document.getElementById('exit-game-button');
+    const resetGameButtonInContainer = document.getElementById('reset-game-in-container');
+    const timerDisplay = document.getElementById('game-timer-display');
+    const scoreDisplay = document.getElementById('game-score-display');
+    const accelInfoDisplay = document.getElementById('level-acceleration-info');
+
+    // Game 2 Elements
+    const game2Wrapper = document.getElementById('game2-container-wrapper');
+    const game2LevelSelection = document.getElementById('game2-level-selection');
+    const game2Area = document.getElementById('game2-area');
+    const g2Player = document.getElementById('g2-player');
+    const g2Enemy = document.getElementById('g2-enemy');
+    const g2Timer = document.getElementById('g2-timer');
+    const g2PlayerHpText = document.getElementById('g2-player-hp-text');
+    const g2EnemyHpText = document.getElementById('g2-enemy-hp-text');
+    const g2PlayerHpFill = document.getElementById('g2-player-health-fill');
+    const g2EnemyHpFill = document.getElementById('g2-enemy-health-fill');
+    const g2Overlay = document.getElementById('game2-overlay');
+    const g2OverlayMsg = document.getElementById('g2-overlay-msg');
+    const g2NextLevelButton = document.getElementById('g2-next-level-button');
+    
+    // Quiz Elements
+    const quizContainer = document.getElementById('quiz-container');
+    const quizDisplay = document.getElementById('quiz-display');
+    const quizResults = document.getElementById('quiz-results');
+
+    // --- GAME 1 LOGIC ---
+    let chungus = { x: 0, y: 0, size: 120 };
+    let carrot = { x: 0, y: 0, size: 25 };
+    let gameLoop, gameTimerTimeout, gameDurationInterval, startTime;
+    let gameActive = false;
+    let currentSettings = null; 
+    let score = 0; 
+    
+    const ACCEL_10_SEC = 10000; 
+    const ACCEL_20_SEC = 20000; 
+    
+    const DIFFICULTY_SETTINGS = {
+        EASY: { levelName: 'EASY', duration: 30000, baseSpeed: 3, rampUpDuration: ACCEL_10_SEC, peakSpeed: 6, glowing: false, accelGlow: true }, 
+        MEDIUM: { levelName: 'MEDIUM', duration: 60000, baseSpeed: 3, rampUpDuration: ACCEL_20_SEC, peakSpeed: 6, glowing: false, accelGlow: true }, 
+        HARD: { levelName: 'HARD', duration: 45000, baseSpeed: 6, rampUpDuration: 0, peakSpeed: 6, glowing: true, accelGlow: false }, 
+        WC: { levelName: 'WC', duration: 90000, baseSpeed: 7, rampUpDuration: 0, peakSpeed: 7, glowing: true, accelGlow: false }, 
+        GOD: { levelName: 'GOD', duration: 120000, baseSpeed: 7, rampUpDuration: ACCEL_10_SEC, peakSpeed: 9, glowing: true, accelGlow: false } 
+    };
+    const game1Levels = ['EASY', 'MEDIUM', 'HARD', 'WC', 'GOD']; // For Next Level logic
+
+    // --- GAME 2 LOGIC & DATA ---
+    const GAME2_LEVELS = {
+        // UPDATED LEVEL DATA
+        1: { hp: 100, time: 60, img: 'https://www.pngmart.com/files/24/Tung-Tung-Tung-Sahur-PNG-Photos.png', shootDelay: 1200 },
+        2: { hp: 250, time: 120, img: 'https://tr.rbxcdn.com/180DAY-fcbe5a4161936e6d793fc6fab1b4bbf0/420/420/Hat/Webp/noFilter', shootDelay: 1000 },
+        3: { hp: 500, time: 180, img: 'https://tr.rbxcdn.com/180DAY-9b981003698727963424f0797c6d4cb7/420/420/BackAccessory/Webp/noFilter', shootDelay: 900 },
+        4: { hp: 1000, time: 300, img: 'https://ih1.redbubble.net/image.2130200545.5747/st,small,845x845-pad,1000x1000,f8f8f8.jpg', shootDelay: 800 },
+        5: { hp: 2000, time: 300, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToG7RUIjLrUuA4Wcfjam9YfHPLigZw05n_7Q&s', shootDelay: 700 }, // HP 2000
+        6: { hp: 5000, time: 600, img: 'https://preview.redd.it/chungus-big-and-his-many-forms-v0-y0d5d0ia6pxf1.png?width=640&crop=smart&auto=webp&s=66602c5946ec73e7a39f3e73af2d2b0f662f69ec', shootDelay: 500 } // Shoots 2x fast
+    };
+
+    let g2State = {
+        active: false,
+        level: 1,
+        maxEnemyHp: 100,
+        currentEnemyHp: 100,
+        playerHp: 100,
+        playerY: 200,
+        enemyY: 175,
+        enemyVy: 3,
+        enemyShootDelay: 1200,
+        lasers: [], 
+        lastShotTime: 0,
+        enemyLastShotTime: 0,
+        timer: 300, 
+        timerInterval: null,
+        loopId: null,
+        keys: { ArrowUp: false, ArrowDown: false, Space: false }
+    };
+
+    // --- QUIZ DATA ---
+    const quizData = [
+        { question: "What character is Big Chungus based on?", options: ["Porky Pig", "Bugs Bunny", "Daffy Duck", "Road Runner"], answer: "Bugs Bunny" },
+        { question: "In which year was the cartoon that inspired Big Chungus first released?", options: ["1980", "2018", "1941", "1965"], answer: "1941" },
+        { question: "What is the name of the classic Looney Tunes short where Big Chungus's form first appeared?", options: ["Hare-Way to the Stars", "Wabbit Twouble", "Rabbit Seasoning", "Duck Amuck"], answer: "Wabbit Twouble" },
+        { question: "In what year did the Big Chungus meme primarily gain widespread popularity online?", options: ["2015", "2018", "2020", "2022"], answer: "2018" },
+        { question: "Big Chungus is often used as a parody of what characteristic of Bugs Bunny?", options: ["His intelligence", "His singing voice", "His exaggerated size and obesity", "His love for carrots"], answer: "His exaggerated size and obesity" },
+        { question: "Which major video game franchise featured an image of Big Chungus in a meme?", options: ["Fortnite", "Grand Theft Auto", "Call of Duty", "PlayStation All-Stars Battle Royale (as an image)"], answer: "PlayStation All-Stars Battle Royale (as an image)" },
+        { question: "What is the common musical phenomenon associated with the Big Chungus meme?", options: ["A rap song about carrots", "An orchestral score", "A viral song repeating 'Big Chungus'", "A rock anthem"], answer: "A viral song repeating 'Big Chungus'" },
+        { question: "What is the core principle of internet culture that the Big Chungus meme exemplifies?", options: ["Original artwork copyright", "Creative freedom and parody", "Documenting historical facts", "Corporate marketing"], answer: "Creative freedom and parody" },
+        { question: "What key visual feature defines the Big Chungus meme?", options: ["A long, skinny bunny", "Bugs Bunny looking severely overweight and surprised", "Bugs Bunny wearing glasses", "Bugs Bunny driving a car"], answer: "Bugs Bunny looking severely overweight and surprised" },
+        { question: "The exaggerated version of Bugs Bunny in the 1941 cartoon was primarily mocking whom?", options: ["Walt Disney", "Elmer Fudd", "The animators themselves", "The studio executives"], answer: "Elmer Fudd" }
+    ];
+
+    // --- QUIZ FUNCTIONS ---
+
+    function resetQuiz() {
+        quizResults.textContent = '';
+        buildQuiz();
+    }
+
+    function buildQuiz() {
+        quizDisplay.innerHTML = ''; 
+        quizData.forEach((data, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `<h3>Question ${index + 1}: ${data.question}</h3><div class="options"></div>`;
+            
+            const optionsDiv = card.querySelector('.options');
+            data.options.forEach(option => {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `question${index}`;
+                input.value = option;
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(` ${option}`));
+                optionsDiv.appendChild(label);
+            });
+            
+            quizDisplay.appendChild(card);
+        });
+    }
+
+    function checkAnswer() {
+        let score = 0;
+        const totalQuestions = quizData.length;
+        
+        quizData.forEach((data, index) => {
+            const questionName = `question${index}`;
+            const selectedInput = document.querySelector(`input[name="${questionName}"]:checked`);
+            const optionsDiv = document.querySelector(`.question-card:nth-child(${index + 1}) .options`);
+            
+            // Reset highlighting
+            optionsDiv.querySelectorAll('label').forEach(label => {
+                label.classList.remove('correct', 'incorrect');
+            });
+
+            if (selectedInput) {
+                const selectedAnswer = selectedInput.value;
+                const correctAnswer = data.answer;
+                
+                // Highlight the correct answer label
+                optionsDiv.querySelectorAll('label').forEach(label => {
+                    if (label.textContent.trim() === correctAnswer) {
+                        label.classList.add('correct');
+                    }
+                });
+
+                if (selectedAnswer === correctAnswer) {
+                    score++;
+                } else {
+                    // Highlight the incorrect selected answer label
+                    selectedInput.parentElement.classList.add('incorrect');
+                }
+            } else {
+                 // If not answered, still show the correct one
+                 optionsDiv.querySelectorAll('label').forEach(label => {
+                    if (label.textContent.trim() === data.answer) {
+                        label.classList.add('correct');
+                    }
+                });
+            }
+        });
+        
+        quizResults.textContent = `You scored ${score} out of ${totalQuestions} (${((score / totalQuestions) * 100).toFixed(0)}%)!`;
+    }
+
+    // --- NAVIGATION FUNCTIONS ---
+
+    function resetView() {
+        // Hide ALL screens
+        quizContainer.style.display = 'none';
+        gameWrapper.style.display = 'none';
+        game2Wrapper.style.display = 'none'; 
+        
+        // Reset Main Content
+        mainContentBlock.style.display = 'block';
+        mainNavIntro.classList.remove('hidden');
+        mainButtonsContainer.classList.remove('hidden');
+        
+        // Stop Games
+        endGame(null); // Game 1
+        stopGame2();   // Game 2
+        
+        currentGameMode = 'none';
+    }
+
+    function returnToMainButtons() {
+        resetView();
+        window.location.href = "#main-nav-intro";
+    }
+
+    // -- Game 1 Nav --
+    function showLevelSelection() {
+        resetView();
+        mainContentBlock.style.display = 'none'; 
+        mainNavIntro.classList.add('hidden');
+        mainButtonsContainer.classList.add('hidden');
+        
+        gameWrapper.style.display = 'block';
+        levelSelection.style.display = 'flex';
+        gameAreaMain.style.display = 'none';
+        
+        window.location.href = "#game-container-wrapper";
+    }
+
+    // -- Quiz Nav --
+    function showQuiz() {
+        resetView();
+        mainContentBlock.style.display = 'none'; 
+        mainNavIntro.classList.add('hidden');
+        mainButtonsContainer.classList.add('hidden');
+        
+        quizContainer.style.display = 'block';
+        resetQuiz(); 
+        
+        window.location.href = "#quiz-container";
+    }
+
+    // -- Game 2 Nav --
+    function showGame2LevelSelection() {
+        resetView();
+        mainContentBlock.style.display = 'none';
+        mainNavIntro.classList.add('hidden');
+        mainButtonsContainer.classList.add('hidden');
+
+        game2Wrapper.style.display = 'block';
+        document.getElementById('game2-level-selection').style.display = 'flex';
+        game2Area.style.display = 'none';
+        
+        window.location.href = "#game2-container-wrapper";
+    }
+
+    // --- GAME 1 LOGIC ---
+    function getAccelerationInfo(settings) {
+        if (settings.rampUpDuration > 0) {
+            const durationSec = settings.duration / 1000;
+            const rampSec = settings.rampUpDuration / 1000;
+            return `Acceleration in last ${rampSec}s.`;
+        }
+        return `Constant Speed.`;
+    }
+
+    function startGame(level) {
+        currentSettings = DIFFICULTY_SETTINGS[level];
+        levelSelection.style.display = 'none';
+        gameAreaMain.style.display = 'block';
+        exitButton.style.display = 'block';
+        resetGameButtonInContainer.style.display = 'block'; 
+        
+        document.body.style.cursor = 'default'; 
+        gameContainer.style.cursor = 'default'; 
+        
+        if (currentSettings.glowing) chungusElement.classList.add('glowing');
+        else chungusElement.classList.remove('glowing');
+        
+        startCountdown();
+        currentGameMode = 'game1';
+    }
+
+    function startCountdown() {
+        let count = 3;
+        exitButton.style.display = 'none';
+        resetGameButtonInContainer.style.display = 'none'; 
+        messages.style.display = 'block';
+        messages.textContent = count;
+        
+        const chungusHalfSize = chungus.size / 2;
+        chungus.x = chungusHalfSize + 5; 
+        chungus.y = chungusHalfSize + 5;
+        chungusElement.style.left = `${chungus.x - chungusHalfSize}px`; 
+        chungusElement.style.top = `${chungus.y - chungusHalfSize}px`;
+
+        const countdownInterval = setInterval(() => {
+            count--;
+            if (count > 0) messages.textContent = count;
+            else if (count === 0) messages.textContent = 'GO!';
+            else {
+                clearInterval(countdownInterval);
+                messages.style.display = 'none';
+                resetGameTimersAndPlay();
+            }
+        }, 1000);
+    }
+    
+    function resetGameTimersAndPlay() {
+        score = 0; 
+        scoreDisplay.textContent = score;
+        exitButton.style.display = 'block';
+        resetGameButtonInContainer.style.display = 'block'; 
+        gameActive = true;
+        startTime = Date.now(); 
+        gameDurationInterval = setInterval(updateTimeAndScore, 100); 
+        gameLoop = setInterval(updateGame, 1000 / 60); 
+        gameTimerTimeout = setTimeout(() => { if (gameActive) endGame(true); }, currentSettings.duration); 
+    }
+
+    function updateTimeAndScore() {
+        if (!gameActive) return;
+        const timeElapsed = Date.now() - startTime;
+        const timeLeft = currentSettings.duration - timeElapsed;
+        timerDisplay.textContent = formatTime(timeLeft > 0 ? timeLeft : 0);
+        score += 1; 
+        scoreDisplay.textContent = score;
+        
+        if (currentSettings.rampUpDuration > 0 && timeLeft <= currentSettings.rampUpDuration && !currentSettings.glowing) {
+             chungusElement.classList.add('glowing');
+        } else if (!currentSettings.glowing) {
+             chungusElement.classList.remove('glowing');
+        }
+    }
+
+    function updateGame() {
+        if (!gameActive) return;
+        let speed = currentSettings.baseSpeed;
+        if (currentSettings.rampUpDuration > 0) {
+            const timeLeft = currentSettings.duration - (Date.now() - startTime);
+            if (timeLeft <= currentSettings.rampUpDuration) {
+                const rampUpRatio = 1 - (timeLeft / currentSettings.rampUpDuration);
+                speed = currentSettings.baseSpeed + (rampUpRatio * (currentSettings.peakSpeed - currentSettings.baseSpeed));
+            }
+        }
+        
+        const dx = carrot.x - chungus.x;
+        const dy = carrot.y - chungus.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance > 1) {
+            chungus.x += (dx / distance) * speed;
+            chungus.y += (dy / distance) * speed;
+        }
+
+        const half = chungus.size / 2;
+        chungusElement.style.left = `${chungus.x - half}px`;
+        chungusElement.style.top = `${chungus.y - half}px`;
+
+        if (distance < (chungus.size / 2) + (carrot.size / 2)) endGame(false); 
+    }
+
+    // UPDATED: Game 1 End Function (with Next Level and NEW Main Menu button)
+    function endGame(won) {
+        if (!gameActive && won !== null) return; 
+        gameActive = false;
+        clearInterval(gameLoop);
+        clearTimeout(gameTimerTimeout);
+        clearInterval(gameDurationInterval); 
+        
+        let messageText = '';
+        let buttonsHtml = '';
+        const currentIndex = game1Levels.indexOf(currentSettings ? currentSettings.levelName : 'EASY'); 
+        const nextLevel = (currentIndex < game1Levels.length - 1) ? game1Levels[currentIndex + 1] : null;
+
+        if (won === true) {
+            messageText = `<span class="win-message">You Won! Score: ${score}</span>`;
+            if (nextLevel) {
+                buttonsHtml += `<button class="game-button" onclick="startGame('${nextLevel}')">Next Level</button>`;
+            }
+        } else if (won === false) {
+            messageText = `<span class="lose-message">You Lose! Score: ${score}</span>`;
+        } else {
+            messageText = "Game Stopped.";
+        }
+        
+        // הוספת כפתורי ניווט סטנדרטיים
+        buttonsHtml += `<button class="game-button reset-button" onclick="resetCurrentGame()">Restart</button>`;
+        buttonsHtml += `<button class="game-button" onclick="showLevelSelection()">Change Level</button>`;
+        
+        // 🌟 הוספת כפתור חזרה למסך הראשי 🌟
+        buttonsHtml += `<button class="game-button" onclick="returnToMainButtons()">Main Menu</button>`; 
+        
+        messages.innerHTML = `<div>${messageText}</div><div class="navigation-buttons" style="margin-top: 20px;">${buttonsHtml}</div>`;
+        messages.style.display = 'block';
+        
+        resetGameButtonInContainer.style.display = 'none'; 
+        chungusElement.classList.remove('glowing');
+        currentGameMode = 'none';
+    }
+    
+    function quitGame() {
+        if (!gameActive) return;
+        endGame(null); 
+        messages.innerHTML = "Game Stopped.";
+    }
+
+    function resetCurrentGame() {
+        if (!currentSettings) { showLevelSelection(); return; }
+        startGame(currentSettings.levelName);
+    }
+
+    // --- GAME 2 LOGIC ---
+
+    function startGame2(levelIndex) {
+        currentGameMode = 'game2';
+        const levelData = GAME2_LEVELS[levelIndex];
+        
+        document.getElementById('game2-level-selection').style.display = 'none';
+        game2Area.style.display = 'block';
+        g2Overlay.style.display = 'none';
+
+        // Setup Stats
+        g2State.level = levelIndex;
+        g2State.maxEnemyHp = levelData.hp;
+        g2State.currentEnemyHp = levelData.hp;
+        g2State.playerHp = 100;
+        g2State.timer = levelData.time; // UPDATED: Set timer from level data
+        g2State.enemyShootDelay = levelData.shootDelay; // UPDATED: Set shoot delay
+        g2State.playerY = 200;
+        g2State.enemyY = 175;
+        g2State.enemyVy = 2 + (levelIndex * 0.5); 
+        g2State.lasers = [];
+        g2State.active = false; 
+
+        // Setup UI
+        g2Enemy.src = levelData.img;
+        updateG2UI();
+
+        // Start Countdown
+        startG2Countdown();
+    }
+
+    function startG2Countdown() {
+        g2Overlay.style.display = 'flex';
+        let count = 3;
+        g2OverlayMsg.innerText = count;
+        g2OverlayMsg.style.color = "#333";
+        
+        const intv = setInterval(() => {
+            count--;
+            if(count > 0) g2OverlayMsg.innerText = count;
+            else if (count === 0) g2OverlayMsg.innerText = "FIGHT!";
+            else {
+                clearInterval(intv);
+                g2Overlay.style.display = 'none';
+                g2State.active = true;
+                startGame2Loop();
+            }
+        }, 1000);
+    }
+
+    function startGame2Loop() {
+        // Start Timer
+        if (g2State.timerInterval) clearInterval(g2State.timerInterval);
+        g2State.timerInterval = setInterval(() => {
+            if (!g2State.active) return;
+            g2State.timer--;
+            updateG2UI();
+            if (g2State.timer <= 0) endGame2(false);
+        }, 1000);
+
+        game2Loop();
+    }
+
+    function resetGame2() {
+        startGame2(g2State.level);
+    }
+
+    function stopGame2() {
+        g2State.active = false;
+        if (g2State.loopId) cancelAnimationFrame(g2State.loopId);
+        if (g2State.timerInterval) clearInterval(g2State.timerInterval);
+    }
+
+    function updateG2UI() {
+        // Timer
+        const m = Math.floor(g2State.timer / 60);
+        const s = g2State.timer % 60;
+        g2Timer.innerText = `${m}:${s < 10 ? '0'+s : s}`;
+
+        // Health
+        g2PlayerHpText.innerText = g2State.playerHp;
+        g2EnemyHpText.innerText = Math.max(0, g2State.currentEnemyHp);
+        
+        const pPct = Math.max(0, (g2State.playerHp / 100) * 100);
+        const ePct = Math.max(0, (g2State.currentEnemyHp / g2State.maxEnemyHp) * 100);
+        
+        g2PlayerHpFill.style.width = `${pPct}%`;
+        g2EnemyHpFill.style.width = `${ePct}%`;
+    }
+
+    function game2Loop() {
+        if (!g2State.active) return;
+
+        // 1. Move Player
+        if (g2State.keys.ArrowUp) g2State.playerY -= 5;
+        if (g2State.keys.ArrowDown) g2State.playerY += 5;
+        // UPDATED Boundary Check: 500 (container) - 120 (player height) = 380
+        g2State.playerY = Math.max(0, Math.min(380, g2State.playerY)); 
+        g2Player.style.top = `${g2State.playerY}px`;
+
+        // 2. Shoot (Throttle)
+        const now = Date.now();
+        if (g2State.keys.Space && now - g2State.lastShotTime > 300) {
+            createLaser(30, g2State.playerY + 25, 'player'); 
+            g2State.lastShotTime = now;
+        }
+
+        // 3. Enemy Logic (Move & Shoot)
+        // Move up and down
+        g2State.enemyY += g2State.enemyVy;
+        // Boundary for enemy (500 - 150) = 350
+        if (g2State.enemyY <= 0 || g2State.enemyY >= 350) { 
+            g2State.enemyVy *= -1;
+        }
+        g2Enemy.style.top = `${g2State.enemyY}px`;
+
+        // Shoot randomly (using dynamic shoot delay)
+        if (now - g2State.enemyLastShotTime > g2State.enemyShootDelay) { 
+             if (Math.random() > 0.5) {
+                 // Center of enemy approx: x ~ 630. y = enemyY + 75
+                 createLaser(630, g2State.enemyY + 75, 'enemy');
+                 g2State.enemyLastShotTime = now;
+             }
+        }
+
+        // 4. Update Lasers
+        document.querySelectorAll('.g2-laser, .g2-enemy-laser').forEach(el => el.remove());
+
+        for (let i = g2State.lasers.length - 1; i >= 0; i--) {
+            let l = g2State.lasers[i];
+            
+            if (l.type === 'player') l.x += 10;
+            else l.x -= 10;
+
+            // Render
+            const el = document.createElement('div');
+            el.className = l.type === 'player' ? 'g2-laser' : 'g2-enemy-laser';
+            el.style.left = `${l.x}px`;
+            el.style.top = `${l.y}px`;
+            game2Area.appendChild(el);
+
+            // Bounds check
+            if (l.x < 0 || l.x > 800) {
+                g2State.lasers.splice(i, 1);
+                continue;
+            }
+
+            // Collision Check
+            if (l.type === 'player') {
+                // Hitbox enemy
+                if (l.x > 630 && l.y > g2State.enemyY && l.y < g2State.enemyY + 150) {
+                    g2State.currentEnemyHp -= 5;
+                    g2State.lasers.splice(i, 1);
+                    updateG2UI();
+                    if (g2State.currentEnemyHp <= 0) endGame2(true);
+                }
+            } 
+            else {
+                // Hitbox player (updated for 120px size)
+                // x < 120 (width) + 20 (offset) = 140. 
+                if (l.x < 140 && l.x > 20 && l.y > g2State.playerY && l.y < g2State.playerY + 120) {
+                    g2State.playerHp -= 5; 
+                    g2State.lasers.splice(i, 1);
+                    updateG2UI();
+                    if (g2State.playerHp <= 0) endGame2(false);
+                }
+            }
+        }
+
+        g2State.loopId = requestAnimationFrame(game2Loop);
+    }
+
+    function createLaser(x, y, type) {
+        g2State.lasers.push({x, y, type});
+    }
+
+    // UPDATED: Game 2 End Function (with Next Level)
+    function endGame2(won) {
+        stopGame2();
+        g2Overlay.style.display = 'flex';
+        
+        if (won) {
+            g2OverlayMsg.innerText = "YOU WON!";
+            g2OverlayMsg.style.color = "#4CAF50";
+            
+            const nextLevel = g2State.level + 1;
+            if (GAME2_LEVELS[nextLevel]) {
+                g2NextLevelButton.style.display = 'inline-block';
+                g2NextLevelButton.onclick = () => startGame2(nextLevel);
+            } else {
+                g2NextLevelButton.style.display = 'none';
+            }
+        } else {
+            g2OverlayMsg.innerText = "YOU DIED";
+            g2OverlayMsg.style.color = "#F44336";
+            g2NextLevelButton.style.display = 'none';
+        }
+    }
+
+    // --- INPUT HANDLING ---
+    window.addEventListener('keydown', (e) => {
+        // Prevent default scrolling for game keys
+        if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+            e.preventDefault();
+        }
+
+        if (currentGameMode === 'game2') {
+            if (e.code === 'ArrowUp') g2State.keys.ArrowUp = true;
+            if (e.code === 'ArrowDown') g2State.keys.ArrowDown = true;
+            if (e.code === 'Space') g2State.keys.Space = true;
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        if (currentGameMode === 'game2') {
+            if (e.code === 'ArrowUp') g2State.keys.ArrowUp = false;
+            if (e.code === 'ArrowDown') g2State.keys.ArrowDown = false;
+            if (e.code === 'Space') g2State.keys.Space = false;
+        }
+    });
+
+    // Existing Mouse Listener for Game 1
+    function handleInputMove(clientX, clientY) {
+        if (!gameActive) return;
+        const bounds = gameContainer.getBoundingClientRect();
+        if (clientX < bounds.left || clientX > bounds.right || clientY < bounds.top || clientY > bounds.bottom) {
+            endGame(false); 
+            // Updated to use the dynamic button generation
+            messages.innerHTML = `<span class="lose-message">You Lose! Score: ${score}</span><div class="navigation-buttons" style="margin-top: 20px;"><button class="game-button reset-button" onclick="resetCurrentGame()">Restart</button><button class="game-button" onclick="showLevelSelection()">Change Level</button><button class="game-button" onclick="returnToMainButtons()">Main Menu</button></div>`;
+            return; 
+        }
+        let newX = clientX - bounds.left;
+        let newY = clientY - bounds.top;
+        carrot.x = Math.max(0, Math.min(bounds.width, newX));
+        carrot.y = Math.max(0, Math.min(bounds.height, newY));
+    }
+    
+    document.addEventListener('mousemove', (e) => { if(currentGameMode==='game1') handleInputMove(e.clientX, e.clientY); });
+    gameContainer.addEventListener('touchmove', (e) => { e.preventDefault(); if(e.touches.length > 0 && currentGameMode==='game1') handleInputMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+
+    // Quiz Helper
+    function formatTime(ms) { 
+        const totalSeconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+        buildQuiz(); // Ensure the quiz structure is built on load
+        returnToMainButtons();
+    });
+
+</script>
+
+</body>
+</html>
